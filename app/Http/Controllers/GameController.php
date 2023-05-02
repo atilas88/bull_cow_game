@@ -72,4 +72,48 @@ class GameController extends Controller
             'game_id' => $game_id
         ],201);
     }
+
+    /**
+     *
+     * * @OA\Delete (
+     *     path="/api/game/delete/{id}",
+     *     tags ={"Game"},
+     *     summary = "Delete a game",
+     *     @OA\Parameter(
+     *         in="path",
+     *         name="id",
+     *         required=true,
+     *         @OA\Schema(type="integer"),
+     *          @OA\Examples( example = "int", value = "1", summary = "Enter a game id")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Game delete successfully"
+     *     ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="The game has been not found"
+     *      ),
+     *      @OA\Response(
+     *       response = "default",
+     *      description = "An error occurred"
+     *    )
+     * )
+     */
+    public function delete(int $id): JsonResponse
+    {
+        $deleted = $this->game->deleteGame($id);
+        if($deleted)
+        {
+            return response()->json([
+                'message' => 'Game deleted successfully',
+            ],200);
+        }
+        else
+        {
+            return response()->json([
+                'message' => 'The game has been not found',
+            ],404);
+        }
+    }
 }

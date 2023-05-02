@@ -24,4 +24,16 @@ class BullCowGame
         $this->game_repository->save($game);
         return $game->id;
     }
+
+    public function deleteGame(int $id): bool
+    {
+        $game = $this->game_repository->get($id);
+
+        if (is_null($game)) {
+            return false;
+        } else {
+            $this->game_repository->delete($game);
+            return true;
+        }
+    }
 }

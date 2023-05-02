@@ -49,6 +49,42 @@
                     }
                 }
             }
+        },
+        "/api/game/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Delete a game",
+                "operationId": "f104f44523cfaba739c8966756d3be5d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "examples": {
+                            "int": {
+                                "summary": "Enter a game id",
+                                "value": "1"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Game delete successfully"
+                    },
+                    "404": {
+                        "description": "The game has been not found"
+                    },
+                    "default": {
+                        "description": "An error occurred"
+                    }
+                }
+            }
         }
     }
 }
