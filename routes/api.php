@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('game')->group(function () {
+    Route::post('/create', [GameController::class,'create']);
+    Route::delete('/delete/{id}', [GameController::class,'delete']);
+});
