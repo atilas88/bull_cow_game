@@ -116,4 +116,67 @@ class GameController extends Controller
             ],404);
         }
     }
+
+    /**
+     * * @OA\Post(
+     *     path="/api/game/proposeCombination",
+     *     tags ={"Game"},
+     *     summary = "Analyze a combination",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="combination",
+     *                     description="combination",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="id",
+     *                     description="Game id",
+     *                     type="integer"
+     *                 ),
+     *                 required={"combination","id"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=200,
+     *        description="Game info"
+     *     ),
+     *
+     *     @OA\Response(
+     *       response = "default",
+     *      description = "An error occurred"
+     *    )
+     * )
+     * */
+    public function proposeCombination(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'combination' => 'required|numeric|min:4',
+            'id' => 'required|numeric'
+        ]);
+        $combination = $request->combination;
+        $id = $request->id;
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+        $response = $this->game->analyzeCombination($combination,$id);
+        if(isset($response['errors']))
+        {
+            return response()->json([
+                'info' => $response['errors']['message']
+            ],$response['errors']['code']);
+        }
+        else
+        {
+            return response()->json([
+                'info' => $response['info']['content']
+            ],$response['info']['code']);
+        }
+
+    }
 }

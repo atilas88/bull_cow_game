@@ -85,6 +85,47 @@
                     }
                 }
             }
+        },
+        "/api/game/proposeCombination": {
+            "post": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Analyze a combination",
+                "operationId": "18893f84144f69967f82211c05d3aa21",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "combination",
+                                    "id"
+                                ],
+                                "properties": {
+                                    "combination": {
+                                        "description": "combination",
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "description": "Game id",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Game info"
+                    },
+                    "default": {
+                        "description": "An error occurred"
+                    }
+                }
+            }
         }
     }
 }

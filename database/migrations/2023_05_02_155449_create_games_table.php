@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->integer('user_age');
-            $table->integer('evaluation');
             $table->integer('status');
+            $table->string('secret');
+            $table->integer('attemp');
+            $table->integer('game_time');
+            $table->integer('evaluation');
             $table->timestamps();
         });
     }
