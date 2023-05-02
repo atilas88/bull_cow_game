@@ -1,0 +1,54 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Bulls and Cows game",
+        "description": "Game API",
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/api/game/create": {
+            "post": {
+                "tags": [
+                    "Game"
+                ],
+                "summary": "Game create",
+                "operationId": "ac0c37c02739b99cedc0f4fabc868823",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "username",
+                                    "user_age"
+                                ],
+                                "properties": {
+                                    "username": {
+                                        "description": "User name",
+                                        "type": "string"
+                                    },
+                                    "user_age": {
+                                        "description": "User age",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Game created"
+                    },
+                    "400": {
+                        "description": "Input erros"
+                    },
+                    "default": {
+                        "description": "An error occurred"
+                    }
+                }
+            }
+        }
+    }
+}
