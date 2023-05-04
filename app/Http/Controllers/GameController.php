@@ -160,7 +160,7 @@ class GameController extends Controller
      *     ),
      *     @OA\Response(
      *        response=409,
-     *        description="Unavailable game, it was won"
+     *        description="Unavailable game, it was won or lost"
      *     ),
      *     @OA\Response(
      *       response = "default",

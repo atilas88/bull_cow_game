@@ -160,9 +160,9 @@ class BullCowGame
               $response['errors']['message'] = ['message'=>'Game Over','combination'=>$combination];
               $response['errors']['code'] = 408;
           }
-          else if($game->status == 1) ///si se gano no tiene sentido seguir encuestando este juego
+          else if($game->status == 1 || $game->status == 3) ///si se ganó o perdió no tiene sentido seguir encuestando este juego
           {
-              $response['errors']['message'] = ['message'=>'Unavailable game, it was won'];
+              $response['errors']['message'] = ['message'=>'Unavailable game, it was won or lost'];
               $response['errors']['code'] = 409;
           }
           else
