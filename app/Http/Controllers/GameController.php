@@ -147,7 +147,7 @@ class GameController extends Controller
      *        description="Game info"
      *     ),
      *    @OA\Response(
-     *        response=400,
+     *        response=403,
      *        description="Duplicate value in combination or duplicate combination"
      *     ),
      *     @OA\Response(
@@ -176,18 +176,86 @@ class GameController extends Controller
             return response()->json(['error' => $validator->errors()], 400);
         }
         $response = $this->game->analyzeCombination($combination,$id);
-        if(isset($response['errors']))
+        return $this->customResponse($response);
+
+    }
+
+    /**
+     * * @OA\Post(
+     *     path="/api/game/previewResponse",
+     *     tags ={"Game"},
+     *     summary = "Get a preview response",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="attempt",
+     *                     description="attempt number",
+     *                     type="integer"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="id",
+     *                     description="Game id",
+     *                     type="integer"
+     *                 ),
+     *                 required={"attempt","id"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *        response=200,
+     *        description="Game info"
+     *     ),
+     *     @OA\Response(
+     *        response=403,
+     *        description="There is no information for attempt"
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Game not found"
+     *     ),
+     *     @OA\Response(
+     *       response = "default",
+     *      description = "An error occurred"
+     *    )
+     * )
+     * */
+
+    public function previewResponse(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'attempt' => 'required|numeric',
+            'id' => 'required|numeric'
+        ]);
+        $attempt = $request->attempt;
+        $id = $request->id;
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 400);
+        }
+        $data = $this->game->previewResponse($attempt,$id);
+
+        return $this->customResponse($data);
+    }
+
+    /*
+     * Helper para brindar una respuesta según los datos
+     * */
+    private function customResponse($data): JsonResponse
+    {
+        if(isset($data['errors']))
         {
             return response()->json([
-                'info' => $response['errors']['message']
-            ],$response['errors']['code']);
+                'info' => $data['errors']['message']
+            ],$data['errors']['code']);
         }
         else
         {
             return response()->json([
-                'info' => $response['info']['content']
-            ],$response['info']['code']);
+                'info' => $data['info']['content']
+            ],$data['info']['code']);
         }
-
     }
 }

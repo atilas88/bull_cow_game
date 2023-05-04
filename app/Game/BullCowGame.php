@@ -102,9 +102,9 @@ class BullCowGame
      * Helper para determinar si una combinación fue enviada
      * anteriormente
      * */
-    public function checkDuplicateCombination($combination): bool
+    public function checkDuplicateCombination($combination,$id): bool
     {
-        if (Cache::has("$combination"))
+        if (Cache::has("$id.$combination"))
             return true;
         return false;
     }
@@ -124,7 +124,7 @@ class BullCowGame
                 break;
             }
         }
-        return $number;
+        return $number + 1;
     }
 
     /*
@@ -166,10 +166,10 @@ class BullCowGame
               $spent_time = $game_max_time - $available_time;
               $evaluation = $spent_time / 2 + $attemp;
               $game->evaluation = $evaluation;
-              if(!$this->validCombination($combination) || $this->checkDuplicateCombination($combination))
+              if(!$this->validCombination($combination) || $this->checkDuplicateCombination($combination,$id))
               {
                   $response['errors']['message'] = ['message'=>'Duplicate value in combination or duplicate combination','combination'=>$combination];
-                  $response['errors']['code'] = 400;
+                  $response['errors']['code'] = 403;
               }
               else if($combination == $game->secret) //juego ganado
               {
@@ -188,7 +188,7 @@ class BullCowGame
                       'rank' => $this->computeRank($id)
                   ];
                   $response['info']['content'] = $game_info;
-                  Cache::put("$combination",$combination,$game_max_time); //Guardar las combinaciones de forma temporal, segun el tiempo del juego
+                  Cache::put("$game->id.$combination",$combination,$game_max_time); //Guardar las combinaciones de forma temporal, segun el tiempo del juego
                   Cache::put("$game->id.$attemp",$game_info,$game_max_time);
               }
               $response['info']['code'] = 200;
@@ -200,7 +200,7 @@ class BullCowGame
     }
     /*
      * Función para obtener la respuesta previa según el
-     * número de intento
+     * número de intento y el id del juegos
      * */
     public function previewResponse(int $attemp, int $id): array
     {
@@ -215,7 +215,13 @@ class BullCowGame
         {
             if (Cache::has("$id.$attemp"))
             {
-                $response = Cache::get("$id.$attemp");
+                $response['info']['content'] = Cache::get("$id.$attemp");
+                $response['info']['code'] = 200;
+            }
+            else
+            {
+                $response['errors']['message'] = "There is no information for attempt $attemp";
+                $response['errors']['code'] = 403;
             }
         }
         return $response;
