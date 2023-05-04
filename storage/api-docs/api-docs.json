@@ -130,6 +130,9 @@
                     "408": {
                         "description": "Game over"
                     },
+                    "409": {
+                        "description": "Unavailable game, it was won"
+                    },
                     "default": {
                         "description": "An error occurred"
                     }

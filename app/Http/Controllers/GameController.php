@@ -159,6 +159,10 @@ class GameController extends Controller
      *        description="Game over"
      *     ),
      *     @OA\Response(
+     *        response=409,
+     *        description="Unavailable game, it was won"
+     *     ),
+     *     @OA\Response(
      *       response = "default",
      *      description = "An error occurred"
      *    )

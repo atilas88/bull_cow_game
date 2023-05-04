@@ -154,11 +154,16 @@ class BullCowGame
           $available_time = $this->checkGameTime($game);
           $game->attemp = $attemp;
 
-          if($available_time >= 0)  //Juego perdido
+          if($available_time >= 0 && $game->status != 1)  //Juego perdido
           {
               $game->status = 3;
               $response['errors']['message'] = ['message'=>'Game Over','combination'=>$combination];
               $response['errors']['code'] = 408;
+          }
+          else if($game->status == 1) ///si se gano no tiene sentido seguir encuestando este juego
+          {
+              $response['errors']['message'] = ['message'=>'Unavailable game, it was won'];
+              $response['errors']['code'] = 409;
           }
           else
           {
