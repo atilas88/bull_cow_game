@@ -146,7 +146,18 @@ class GameController extends Controller
      *        response=200,
      *        description="Game info"
      *     ),
-     *
+     *    @OA\Response(
+     *        response=400,
+     *        description="Duplicate value in combination or duplicate combination"
+     *     ),
+     *     @OA\Response(
+     *        response=404,
+     *        description="Game not found"
+     *     ),
+     *     @OA\Response(
+     *        response=408,
+     *        description="Game over"
+     *     ),
      *     @OA\Response(
      *       response = "default",
      *      description = "An error occurred"

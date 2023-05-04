@@ -8,5 +8,12 @@ class GameRepository extends BaseRepository
     {
         parent::__construct($game);
     }
+    public function getGamesSorted()
+    {
+        return $this->model
+                ->orderBy('status')
+                ->orderBy('evaluation')
+                ->get();
+    }
 
 }

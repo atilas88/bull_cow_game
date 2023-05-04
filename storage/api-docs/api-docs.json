@@ -121,6 +121,15 @@
                     "200": {
                         "description": "Game info"
                     },
+                    "400": {
+                        "description": "Duplicate value in combination"
+                    },
+                    "404": {
+                        "description": "Game not found"
+                    },
+                    "408": {
+                        "description": "Game over"
+                    },
                     "default": {
                         "description": "An error occurred"
                     }
