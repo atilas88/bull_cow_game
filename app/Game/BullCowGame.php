@@ -51,7 +51,7 @@ class BullCowGame
      * Helper para generar la combinación secreta
      * */
 
-    private function generateSecret(): string
+    public function generateSecret(): string
     {
         $secret = "";
         for ($i = 0; $i < 4; $i++) {
@@ -67,7 +67,7 @@ class BullCowGame
     /*
      * Helper para calcular los toros y vacas
      * */
-    private function computeBullsCows(string $combination,string $secret): array
+    public function computeBullsCows(string $combination,string $secret): array
     {
         $bulls = 0;
         $cows = 0;
