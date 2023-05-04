@@ -37,10 +37,14 @@ php artisan key:generate
 ```
 php artisan migrate
 ```
-6. Inicie la app
+6. Ejecute las pruebas unitarias
+```
+php artisan test
+```
+7. Inicie la app
 ```
 php artisan serve
 ```
-7. Consulte el api ejecutando:
+8. Consulte el api ejecutando:
 http://ip_serv:puerto/api/documentation
 
