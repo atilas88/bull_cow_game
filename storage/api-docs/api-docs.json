@@ -122,7 +122,7 @@
                         "description": "Game info"
                     },
                     "400": {
-                        "description": "Duplicate value in combination"
+                        "description": "Duplicate value in combination or duplicate combination"
                     },
                     "404": {
                         "description": "Game not found"

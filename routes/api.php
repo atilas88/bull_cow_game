@@ -22,4 +22,5 @@ Route::prefix('game')->group(function () {
     Route::post('/create', [GameController::class,'create']);
     Route::delete('/delete/{id}', [GameController::class,'delete']);
     Route::post('/proposeCombination', [GameController::class,'proposeCombination']);
+    Route::post('/previewResponse', [GameController::class,'previewResponse']);
 });

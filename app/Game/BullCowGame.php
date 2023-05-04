@@ -188,8 +188,8 @@ class BullCowGame
                       'rank' => $this->computeRank($id)
                   ];
                   $response['info']['content'] = $game_info;
-                  Cache::put("$combination",$combination,$game_max_time);
-                  Cache::put("$attemp",$game_info,$game_max_time);
+                  Cache::put("$combination",$combination,$game_max_time); //Guardar las combinaciones de forma temporal, segun el tiempo del juego
+                  Cache::put("$game->id.$attemp",$game_info,$game_max_time);
               }
               $response['info']['code'] = 200;
 
@@ -197,5 +197,27 @@ class BullCowGame
           $this->game_repository->save($game);
       }
       return $response;
+    }
+    /*
+     * Función para obtener la respuesta previa según el
+     * número de intento
+     * */
+    public function previewResponse(int $attemp, int $id): array
+    {
+        $game = $this->game_repository->get($id); //Buscar el juego
+        $response = [];
+        if(is_null($game))
+        {
+            $response['errors']['message'] = "Game not found";
+            $response['errors']['code'] = 404;
+        }
+        else
+        {
+            if (Cache::has("$id.$attemp"))
+            {
+                $response = Cache::get("$id.$attemp");
+            }
+        }
+        return $response;
     }
 }
